@@ -1,0 +1,26 @@
+image:
+  repository: harness/gitness:latest
+
+service:
+  type: ClusterIP
+  name: gitness
+  port: 3000
+  nodePort:
+
+volumes:
+  dockerSockPath: /var/run/docker.sock
+  dataPath: /tmp/gitness
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetAverageUtilization: 80
+
+ingress:
+  enabled: false
+  host: localhost
+  path: /
+
+gitness-chart:
+  fullname: gitness

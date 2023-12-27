@@ -1,0 +1,4 @@
+apiVersion: v2
+name: gitness-chart
+description: A Helm chart for deploying the gitness service
+version: 0.1.0

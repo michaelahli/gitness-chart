@@ -1,0 +1,20 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: { { template "gitness-chart.fullname" . } }
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: { { .Values.ingress.host } }
+      http:
+        paths:
+          - pathType: Prefix
+            path:  { { .Values.ingress.path } }
+            backend:
+              service:
+                name: { { .Values.service.name } }
+                port:
+                  number: { { .Values.service.port } }
+{{- end }}

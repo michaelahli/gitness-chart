@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.service.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.service.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.service.name }}
+    spec:
+      containers:
+      - name: {{ .Values.service.name }}
+        image: {{ .Values.image.repository }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+        - name: docker-socket-volume
+          mountPath: /var/run/docker.sock
+        - name: gitness-data-volume
+          mountPath: /data
+      volumes:
+      - name: docker-socket-volume
+        hostPath:
+          path: {{ .Values.volumes.dockerSockPath }}
+      - name: gitness-data-volume
+        hostPath:
+          path: {{ .Values.volumes.dataPath }}
